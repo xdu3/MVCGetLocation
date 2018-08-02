@@ -1,0 +1,11 @@
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\bin\Debug\netcoreapp2.0\MVCGetLocation.deps.json
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\bin\Debug\netcoreapp2.0\MVCGetLocation.runtimeconfig.json
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\bin\Debug\netcoreapp2.0\MVCGetLocation.runtimeconfig.dev.json
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\bin\Debug\netcoreapp2.0\MVCGetLocation.dll
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\bin\Debug\netcoreapp2.0\MVCGetLocation.pdb
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\obj\Debug\netcoreapp2.0\MVCGetLocation.csprojAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\obj\Debug\netcoreapp2.0\MVCGetLocation.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\obj\Debug\netcoreapp2.0\MVCGetLocation.AssemblyInfoInputs.cache
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\obj\Debug\netcoreapp2.0\MVCGetLocation.AssemblyInfo.cs
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\obj\Debug\netcoreapp2.0\MVCGetLocation.dll
+C:\Users\Administrator\Documents\GitHub\MVCGetLocation\MVCGetLocation\obj\Debug\netcoreapp2.0\MVCGetLocation.pdb

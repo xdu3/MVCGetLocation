@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<br /><br />
+<div>
+      <h2>@ViewBag.Message</h2>
+      <div id="accessLocation">
+          We can help you better if we know where you are . would you like use to your location information?(Click no to provide zip/pin code manually)
+          <input type="button" id="yesLocation" name="name" value="Yes" />
+          <input type="button"  id="noLocation" name="name" value="No" />
+
+      </div>
+</div>
+<div id="autoLocation">
+    <ul>
+        <li>
+            <div style="float:left; width:75px" >
+                Latitude
+            </div>
+            <input type="text" id="lat" />
+        </li>
+        <br />
+        <li>
+            <div style="float:left; width:75px">
+                Longitude
+            </div>
+            <input type="text" id="lon" />
+        </li>
+    </ul>
+</div>
+<div id="manualLocation">
+    Please enter the zip/pin of your current location:
+    <input type="text" id="zip" name="name" value="" />
+</div>
+@section Scripts{ 
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $("#autoLocation").hide();
+        $("#manualLocation").hide();
+
+        $("#yesLocation").click(
+            function () {
+                $("#accessLocation").hide();
+                $("#autoLocation").show();
+                $("#manualLocation").hide();
+                var options =
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 20000,
+                        maximumAge: 2000
+                    };
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPostion, PositionError, options
+                    );
+                }
+                else {
+                    showNoLocation();
+                }
+            }
+        );
+
+        $("#noLocation").click(
+            function () {
+                showNoLocation();
+
+            }
+        );
+
+        function showNoLocation() {
+            $("#accessLocation").hide();
+            $("#autoLocation").hide();
+            $("#manualLocation").show();
+
+        }
+
+        function showPostion(position) {
+            var coordinates = position.coords;
+            $("#lat").val(coordinates.latitude)
+            $("#lon").val(coordinates.longitude)
+
+        }
+        function PositionError(postion) {
+            switch (postion.code) {
+                case 0:
+                    showNoLocation()
+                    break;
+                case 1:
+                    showNoLocation()
+                    break;
+                case 2:
+                    showNoLocation()
+                    break;
+                case 3:
+                    showNoLocation()
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
+    }
+    );
+</script>
+    }

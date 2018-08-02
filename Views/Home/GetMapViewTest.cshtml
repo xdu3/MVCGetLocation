@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "GetMapViewTest";
+}
+
+<h2>GetMapView</h2>
+
+<div id="askPermission">
+    Please give us your location information help us to locate your location
+    <br />
+    <input type="button" id="yesLocation" name="name" value="Yes" />
+    <input type="button" id="noLocation" name="name" value="No" />
+</div>
+<div id="manualEntry">
+    your current location
+    <input type="text" id="manulAddress" name="name" width="500px;" />
+    <input type="button" id="getManualDirections" name="name" value="Get Directions" />
+</div>
+<div id="mapContainer" style="height:500px;">
+    <div style="float:left">
+        <div id="directionsMap" style="float:none; position:relative; width:720px; height:400px;"></div>
+    </div>
+    <div id="directionsList" style="float:left;overflow:auto; width:250px; height:400px;"></div>
+</div>
+@section Scripts{
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            var map = null;
+            var directionsManager = null;
+            var location = null;
+            var STORE_LOCATION = "San Jose, CA";
+
+            $("#manualEntry").hide();
+            $("#yesLocation").click(
+                function () {
+                    $("#askPermission").hide();
+                    loadMap();
+                    var options = {
+                        enableHighAccuracy: true,
+                        timeout: 20000,
+                        maximumAge: 2000
+
+                    }
+                    navigator.geolocation.getCurrentPosition(showPostion, PositionError, options
+                    );
+                }
+            );
+
+            function loadMap() {
+                if (!map) {
+                    map = new Microsoft.Maps.Map(document.getElementById("directionMap"),
+                        {
+                            credentials: "Ao4jeZLtmWpe88pKouF5kj_bRUiTLZtrw63WGoaQ1rPajTM46TWrgl3i94khzm9R"
+                        }
+                    );
+
+                }
+
+            }
+
+            function showPosition(position) {
+                map.entities.clear();
+                if (position) {
+                    location = position.coords;
+                    map.setView(
+                        {
+                            zoom: 15,
+                            center: new Microsoft.Maps.location
+                                (
+                                location.lattitude, location.longitude
+                                )
+
+                        }
+                    )
+                }
+                if (!directionsManager) {
+                    Microsoft.Maps.loadModule(
+                        'Microsoft.Maps.Directions', { callback: createDirectionsManager }
+                    );
+                }
+                else {
+                    createDirectionsManager();
+                }
+
+            }
+            function createDirectionsManager() {
+                var displayMessage;
+                if (!directionsManager) {
+                    directionsManager = new Microsoft.Maps.DirectionsManager(map);
+                    displayMessage = 'Directions Module loaded\n';
+                    displayMessage += 'Directions Manager loaded';
+                }
+                directionsManager.resetDirections();
+                directionsErrorEventObj = Microsoft.Maps.Events.addHandler(directionsManager, 'directionsError', directionsError);
+                directionsUpdatedEventObj = Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', directionsUpdated);
+                createDirvingRoute(location);
+
+            }
+            function directionsUpdated() {
+
+            }
+            function directionError(args) {
+
+            }
+            function createDrivingRoute(coords) {
+                if (!directionsManager) {
+                    createDirectionsManager();
+                }
+                directionsManager.resetDirections();
+                directionsManager.setRequestOptions
+                    ({
+                        routeMode: Microsoft.Maps.Directions.RouteMode.driving
+                    });
+                var fromWayPoint = null;
+                if (coords != null) {
+                    fromWayPoint = new Microsoft.Maps.Waypoint({
+                        location: new Microsoft.Maps.Location(coords.lattitude, coords.longitude)
+
+                    });
+                    directionsManager.addWaypoint(fromWayPoint);
+                }
+                else {
+                    fromWayPoint = new Microsoft.Maps.Directions.Waypoint({ address: $('#manualAddress').val() });
+                    directionsManager.addWaypoint(fromWayPoint);
+
+                }
+                var toWayPoint = new Microsoft.Maps.Directions.Waypoint({ address: STORE_LOCATION });
+                directionsManager.addWaypoint(toWayPoint);
+                directionsManager.setRenderOption({ itineraryContainer: document.getElementById('directionsList') });
+                directionsManager.calculateDirections();
+                $("#noLocation").click(
+                    function () {
+                        ("#askPermission").hide();
+                        showManualEntry();
+                    }
+                );
+
+                function showManualEntry() {
+                    $("#manualEntry").show();
+                }
+
+                $("#getManualDirections").click(
+                    function () {
+                        loadMap();
+                        showPosition(null);
+                    }
+                );
+                function positionError(position) {
+                    switch (position.code) {
+                        case 1:
+                            showManualEntry();
+                            break;
+                        case 2:
+                            showManualEntry();
+                            break;
+                        case 3:
+                            showManualEntry();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
+    </script>
+}
